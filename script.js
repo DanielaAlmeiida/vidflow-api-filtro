@@ -33,28 +33,14 @@ async function buscarEMostrarVideos() {
 buscarEMostrarVideos();
 
 
-/* Filtro pela barra de pesquisa */
-const barraDePesquisa = document.querySelector(".pesquisar__input")
-
-barraDePesquisa.addEventListener("input", filtrarPesquisa)
-
+/* Filtro pela barra de pesquisa refatorado */
 function filtrarPesquisa() {
     const videos = document.querySelectorAll(".videos__item")
+    const valorFiltro = barraDePesquisa.value.toLowerCase();
 
-    if(barraDePesquisa.value != "") {
-        for(let video of videos){
-            let titulo = video.querySelector(".titulo-video").textContent.toLowerCase();
-            let valorFiltro = barraDePesquisa.value.toLowerCase();
+    videos.forEach((video) => {
+        const titulo = video.querySelector(".titulo-video").textContent.toLowerCase();
 
-            if(!titulo.includes(valorFiltro)) {
-                video.style.display = "none";
-            } else {
-                video.style.display = "block";
-            }
-        }
-    }else{
-        for (let video of videos) {  
-            video.style.display = 'block';
-        }
-    }
+        video.style.display = valorFiltro ? titulo.includes(valorFiltro) ? "block" : "none" : "block";
+    })
 }
