@@ -1,4 +1,5 @@
 const containerVideos = document.querySelector(".videos__container");
+const botaoCategoria = document.querySelectorAll(".superior__item");
 
 async function buscarEMostrarVideos() {
 
@@ -33,7 +34,6 @@ async function buscarEMostrarVideos() {
 buscarEMostrarVideos();
 
 
-/* Filtro pela barra de pesquisa refatorado */
 function filtrarPesquisa() {
     const videos = document.querySelectorAll(".videos__item")
     const valorFiltro = barraDePesquisa.value.toLowerCase();
@@ -43,4 +43,24 @@ function filtrarPesquisa() {
 
         video.style.display = valorFiltro ? titulo.includes(valorFiltro) ? "block" : "none" : "block";
     })
+}
+
+
+botaoCategoria.forEach((botao) => {
+    let nomeCategoria = botao.getAttribute("name");
+    botao.addEventListener("click", () => {
+        filtrarPorCategoria(nomeCategoria)
+    })
+})
+
+function filtrarPorCategoria(filtro) {
+    const videos = document.querySelectorAll(".videos__item")
+
+    videos.forEach((video) => {
+        let valorFiltro = filtro.toLowerCase();
+        let categoria = video.querySelector(".categoria").textContent.toLowerCase();
+
+        video.style.display = !categoria.includes(valorFiltro) && valorFiltro != 'tudo' ? "none" : "block"
+    })
+
 }
